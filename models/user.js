@@ -5,13 +5,9 @@ var validator = require('validator');
 var userSchema = new mongoose.Schema({
   email: {
     type: String,
-    required: true,
     unique: true
   },
-  password: {
-    type: String,
-    required: true
-  },
+  password: String,
   created_at: {
     type: Date,
     default: Date.now
@@ -26,7 +22,7 @@ var userSchema = new mongoose.Schema({
     location: { type: String, default: '' },
     website: { type: String, default: '' },
     picture: { type: String, default: '' }
-  },
+  }
 });
 
 userSchema.pre('save', function(next) {
