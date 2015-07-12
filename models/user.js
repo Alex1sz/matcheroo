@@ -8,6 +8,7 @@ var userSchema = new mongoose.Schema({
     unique: true
   },
   password: String,
+  location: String,
   created_at: {
     type: Date,
     default: Date.now
@@ -19,17 +20,18 @@ var userSchema = new mongoose.Schema({
   profile: {
     name: { type: String, default: '' },
     gender: { type: String, default: '' },
-    location: { type: String, default: '' },
     website: { type: String, default: '' },
     picture: { type: String, default: '' }
   }
 });
 
+// userSchema.pre('save', function(next) {passport.authenticate('google', { scope: 'profile email' }));
+
 userSchema.pre('save', function(next) {
   if (!this.isModified('password')) {
     return next();
   }
-  // if user changed password, we must rehash
+  // if the user changed password, rehash
   this.password = User.encryptPassword(this.password);
   next();
 });
